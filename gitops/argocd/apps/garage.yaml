@@ -13,16 +13,14 @@ spec:
     targetRevision: 0.2.1
     helm:
       values: |
-        deployment:
-          replicaCount: 3
-
+        # Base configuration with persistent volumes and initial buckets/keys
         garage:
-          replicationFactor: "2"
+          replicationFactor: "1"
           s3:
             api:
-              rootDomain: ".s3.garage.example.com"
+              rootDomain: ".s3.homelab.test"
             web:
-              rootDomain: ".web.garage.example.com"
+              rootDomain: ".web.homelab.test"
 
         persistence:
           enabled: true
@@ -39,63 +37,16 @@ spec:
             enabled: true
             zone: dc1
           buckets:
+            - name: backups
             - name: media
               public: true
-            - name: backups
-            - name: staging
           keys:
-            recommended-key:
-              keyId: GK89ABCDEF0123456789ABCDEF
-              secretKey: fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210
+            my-key:
+              keyId: GK0123456789ABCDEF01234567
+              secretKey: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
               buckets:
-                - media
                 - backups
-                - staging
-
-        ingress:
-          s3:
-            api:
-              enabled: true
-              className: nginx
-              hosts:
-                - host: s3.garage.example.com
-                  paths:
-                    - path: /
-                      pathType: Prefix
-              tls:
-                - secretName: s3-garage-tls
-                  hosts:
-                    - s3.garage.example.com
-            web:
-              enabled: true
-              className: nginx
-              hosts:
-                - host: web.garage.example.com
-                  paths:
-                    - path: /
-                      pathType: Prefix
-              tls:
-                - secretName: web-garage-tls
-                  hosts:
-                    - web.garage.example.com
-
-        webui:
-          enabled: true
-          auth:
-            enabled: true
-            userPassHash: "admin:$2b$05$5/0Ls700/VazrhxLnQNqe.PlI0KMQGIwPmjrIYyIXjRCCAsu3uoNm"
-          ingress:
-            enabled: true
-            className: nginx
-            hosts:
-              - host: garage-ui.example.com
-                paths:
-                  - path: /
-                    pathType: Prefix
-            tls:
-              - secretName: garage-ui-tls
-                hosts:
-                  - garage-ui.example.com
+                - media
   destination:
     server: https://kubernetes.default.svc
     namespace: garage
