@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: jarvis-tools
+  namespace: argocd
+spec:
+  description: Jarvis Tool Runner
+  sourceRepos:
+    - git@github.com:MarekTran/dius-infra-monorepo.git
+    - https://datahub-local.github.io/garage-helm
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
