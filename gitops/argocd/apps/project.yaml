@@ -7,7 +7,7 @@ spec:
   description: Jarvis Tool Runner
   sourceRepos:
     - git@github.com:MarekTran/dius-infra-monorepo.git
-    - https://datahub-local.github.io/garage-helm
+    - https://git.deuxfleurs.fr/Deuxfleurs/garage.git
   destinations:
     - namespace: '*'
       server: https://kubernetes.default.svc

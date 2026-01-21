@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: garagefs
+  namespace: argocd
+spec:
+  project: jarvis-tools
+  source:
+    repoURL: https://git.deuxfleurs.fr/Deuxfleurs/garage.git
+    targetRevision: HEAD
+    path: scripts/helm/garage
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: garage
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

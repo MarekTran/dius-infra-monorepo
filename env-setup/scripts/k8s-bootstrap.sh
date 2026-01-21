@@ -34,6 +34,7 @@ kubectl label secret repo-dius-infra -n argocd argocd.argoproj.io/secret-type=re
 
 echo ""
 echo "=== Bootstrapping ArgoCD ==="
-kubectl apply -f "$GITOPS_DIR/argocd/project.yaml"
+# project.yaml will be picked up by Argo
+kubectl apply -f "$GITOPS_DIR/argocd/apps/project.yaml"
 kubectl apply -f "$GITOPS_DIR/argocd/bootstrap.yaml"
 

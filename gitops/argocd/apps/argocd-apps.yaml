@@ -14,5 +14,5 @@ spec:
     namespace: argocd                                                                                                                          
   syncPolicy:                                                                                                                                  
     automated:                                                                                                                                 
-      prune: true                                                                                                                              
+      prune: false # So argo doesnt kill itself                                                                                                                              
       selfHeal: true
