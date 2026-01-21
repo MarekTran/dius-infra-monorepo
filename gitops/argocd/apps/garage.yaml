@@ -1,0 +1,107 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: garage
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: jarvis-tools
+  source:
+    repoURL: https://datahub-local.github.io/garage-helm
+    chart: garage
+    targetRevision: 0.2.1
+    helm:
+      values: |
+        deployment:
+          replicaCount: 3
+
+        garage:
+          replicationFactor: "2"
+          s3:
+            api:
+              rootDomain: ".s3.garage.example.com"
+            web:
+              rootDomain: ".web.garage.example.com"
+
+        persistence:
+          enabled: true
+          data:
+            storageClass: managed
+            size: 10Gi
+          meta:
+            storageClass: managed-premium
+            size: 500Mi
+
+        clusterConfig:
+          enabled: true
+          layout:
+            enabled: true
+            zone: dc1
+          buckets:
+            - name: media
+              public: true
+            - name: backups
+            - name: staging
+          keys:
+            recommended-key:
+              keyId: GK89ABCDEF0123456789ABCDEF
+              secretKey: fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210
+              buckets:
+                - media
+                - backups
+                - staging
+
+        ingress:
+          s3:
+            api:
+              enabled: true
+              className: nginx
+              hosts:
+                - host: s3.garage.example.com
+                  paths:
+                    - path: /
+                      pathType: Prefix
+              tls:
+                - secretName: s3-garage-tls
+                  hosts:
+                    - s3.garage.example.com
+            web:
+              enabled: true
+              className: nginx
+              hosts:
+                - host: web.garage.example.com
+                  paths:
+                    - path: /
+                      pathType: Prefix
+              tls:
+                - secretName: web-garage-tls
+                  hosts:
+                    - web.garage.example.com
+
+        webui:
+          enabled: true
+          auth:
+            enabled: true
+            userPassHash: "admin:$2b$05$5/0Ls700/VazrhxLnQNqe.PlI0KMQGIwPmjrIYyIXjRCCAsu3uoNm"
+          ingress:
+            enabled: true
+            className: nginx
+            hosts:
+              - host: garage-ui.example.com
+                paths:
+                  - path: /
+                    pathType: Prefix
+            tls:
+              - secretName: garage-ui-tls
+                hosts:
+                  - garage-ui.example.com
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: garage
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
