@@ -1,0 +1,18 @@
+services:
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    restart: unless-stopped
+    # Ephemeral storage for demo
+    volumes:
+      - /data
+    network_mode: service:app
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Privileged mode required for bubblewrap (nested namespaces)
+    privileged: true
+    ports:
+      - "7900:7900"
+    environment:
+      AZURE_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
