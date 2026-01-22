@@ -38,3 +38,11 @@ Agent
 Tools
 - id  
 Available to: (Many to one) -> Agent
+
+
+### Hours spent log:  
+**Marek**  
+21.1.2026  
+8 hours - Commits `bcf0b7420f0de8505f830e3fc6c699a406b69ed4` - `7222992a104bafde282bdf854dca98703b19b894`  
+22.1.2026  
+5 hours - Commits `a395268e3bc00cb097c4109378bde2fade3ec4a9` - `7222992a104bafde282bdf854dca98703b19b894`
