@@ -4,6 +4,7 @@
 ### AgenticSwarm
 
 ### Code Runner
+[README](applications/coderunner/README.md)
 FastAPI server executing python code.  
 
 ### DataMap MCP Server
