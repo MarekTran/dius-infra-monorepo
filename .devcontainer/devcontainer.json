@@ -1,0 +1,24 @@
+{
+  "name": "uv",
+  "dockerComposeFile": "compose.dev.yaml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/dius-infra-monorepo",
+  "forwardPorts": [10000, 10001],
+  "portsAttributes": {
+    "10000": {"label": "Azurite Blob Storage Emulator", "onAutoForward": "silent"},
+    "10001": {"label": "Azurite Blob Storage Emulator HTTPS", "onAutoForward": "silent"}
+  },
+  "remoteUser": "developer",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "streetsidesoftware.code-spell-checker",
+        "esbenp.prettier-vscode"
+      ]
+    }
+},
+"features": {
+	"ghcr.io/devcontainers/features/python:1": {}
+}
+}
