@@ -1,13 +1,10 @@
-# dius-infra-monorepo
-# TODO LIST:
+## AgenticSwarm
 
-### AgenticSwarm
+## Code Runner
+[README](applications/coderunner/README.md)  
+Sandboxed python code execution server.  
 
-### Code Runner
-[README](applications/coderunner/README.md)
-FastAPI server executing python code.  
-
-### DataMap MCP Server
+## DataMap MCP Server
 FastMCP server. Only need 1 replica as this is basically a proxy. Very lightweight, no need to scale.
 - On startup load tool config from Datamap
 - dynamic adding of tools
@@ -18,14 +15,14 @@ FastMCP server. Only need 1 replica as this is basically a proxy. Very lightweig
 Depends on: 
 - Object storage
 
-### Redis
+## Redis
 - used for pub/sub channels
 
-### VibeCode UI + Tool **CICD pipeline
+## VibeCode UI + Tool **CICD pipeline
 - Code checker out of scope, add tool directly to Datamap -> update MCP
 - can access datamap for data
 
-### MockDataMap
+## MockDataMap
 FastAPI server 
 Endpoints:
 1. /tools/create
