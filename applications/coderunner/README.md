@@ -91,13 +91,19 @@ docker compose -f compose.demo.yaml down
 ```
 
 **Example**:
+
+Read tool hashes from the logs at startup.  
+`app-1      | INFO:coderunner:Example 'tool.py' initialized. Local MD5 Hash: 7ae965d5837bf61dc880b71f11d6f344`  
+`app-1      | INFO:coderunner:Example 'attack.py' initialized. Local MD5 Hash: 29d989943038b0fcde4836a0e3b447a4`  
+Replace `$TOOL_HASH` with corresponding md5 hash.
+
 ### Joke Telling Tool
 ```bash
 curl -X POST "http://localhost:7900/runcode/" \
      -H "Content-Type: application/json" \
      -d '{
            "blob_name": "tool.py",
-           "file_hash": "7ae965d5837bf61dc880b71f11d6f344",
+           "file_hash": "$TOOL_HASH",
            "arguments": {
                "age": 25
            }
@@ -109,10 +115,11 @@ curl -X POST "http://localhost:7900/runcode/" \
      -H "Content-Type: application/json" \
      -d '{
            "blob_name": "attack.py",
-           "file_hash": "750cc154b1b75b84b6321599dad83a28",
+           "file_hash": "$TOOL_HASH",
            "arguments": {}
          }'
 ```
 
 # TODO:
 - Create a separate venv with preload of allowed python packages for the sandboxed code.
+- To avoid using privileged/host kernel access, use `runtimeClassName: kata-qemu  # or kata-fc (Firecracker)`, this makes `securityContext.privileged: true` secure.
