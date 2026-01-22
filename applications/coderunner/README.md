@@ -113,3 +113,6 @@ curl -X POST "http://localhost:7900/runcode/" \
            "arguments": {}
          }'
 ```
+
+# TODO:
+- Create a separate venv with preload of allowed python packages for the sandboxed code.

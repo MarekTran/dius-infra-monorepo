@@ -1,3 +1,4 @@
+# Do not delete this, this is part of a demo and is preloaded into the blob storage.
 import os
 import sys
 import subprocess
