@@ -1,8 +1,10 @@
-.*
+./.*
 !.gitignore
 !.gitkeep
+!.devcontainer
 # Terraform
 *.tfstate
 *.tfstate.*
 .terraform/
 *.tfvars
+.k8s.yaml
